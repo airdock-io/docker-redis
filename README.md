@@ -11,9 +11,9 @@ Purpose of this image is:
 
 > Name: airdock/redis
 
-Dependency: airdock/base:latest
+***Dependency***: airdock/base:latest
 
-Few links:
+***Few links***:
 
 - [Puckel Redis](https://github.com/puckel/dockerfiles)
 - [Docker Redis](https://github.com/dockerfile/redis)
@@ -54,19 +54,19 @@ In Makefile, you could retrieve this *variables*:
 
 And *tasks*:
 
-- all: alias to 'build'
-- clean: remove all container which depends on this image, and remove image previously builded
-- build: clean and build the current version
-- tag_latest: build and tag current version with ":latest"
-- release: execute tag_latest, push image onto registry, and tag git repository
-- debug: launch default command with builded image in interactive mode
-- run: run image as daemon and print IP address.
+- ***all***: alias to 'build'
+- ***clean***: remove all container which depends on this image, and remove image previously builded
+- ***build***: clean and build the current version
+- ***tag_latest***: build and tag current version with ":latest"
+- ***release***: execute tag_latest, push image onto registry, and tag git repository
+- ***debug***: launch default command with builded image in interactive mode
+- ***run***: run image as daemon and print IP address.
 
 
 
 # License
 
-``
+```
  Copyright (c) 1998, 1999, 2000 Thai Open Source Software Center Ltd
 
  Permission is hereby granted, free of charge, to any person obtaining
