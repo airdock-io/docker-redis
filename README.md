@@ -43,6 +43,7 @@ Purpose of this image is:
 - expose port 6379
 - listen all adresses
 - data directory "/var/lib/redis" (from package) 
+- add volume on log folder (/var/log/redis) and data folder (/var/lib/redis)
 
 
 # Build

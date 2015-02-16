@@ -25,6 +25,11 @@ RUN echo "deb http://http.debian.net/debian wheezy-backports main contrib non-fr
 # Define working directory.
 WORKDIR /var/lib/redis
 
+# Data Folder
+VOLUME ["/var/lib/redis"]
+# log folder
+VOLUME ["/var/log/redis"]
+
 # Expose ports.
 EXPOSE 6379
 
