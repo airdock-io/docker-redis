@@ -25,8 +25,8 @@ Purpose of this image is:
 1. You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
 2. Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
 `docker search airdock` or go directly in 3.
-3. Execute:
-	'docker run -t -i  airdock/redis '
+3. Execute redis server with default configuration:
+	'docker run -d -p 6379:6379  airdock/redis '
 
 
 
@@ -34,12 +34,12 @@ Purpose of this image is:
 
 ## Todo
 
-- Set a dedicated user account
 - more test and usage (single, master/slave, ...)
 
 ## latest (current)
 
-- add redis package
+- add redis server
+- launch redis-server with redis:redis
 
 
 # Build
