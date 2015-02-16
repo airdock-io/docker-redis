@@ -1,13 +1,12 @@
 # REDIS
 
-Docker Image for Redis based on airdock/base:latest
+Docker Image for [Redis](http://redis.io) based on airdock/base:latest
 
 
 Purpose of this image is:
 
 - install Redis server
 - based on airdock/base:latest (debian)
-
 
 > Name: airdock/redis
 
@@ -39,7 +38,11 @@ Purpose of this image is:
 ## latest (current)
 
 - add redis server
-- launch redis-server with redis:redis
+- launch redis-server with redis:redis account
+- log to docker collector
+- expose port 6379
+- listen all adresses
+- data directory "/var/lib/redis" (from package) 
 
 
 # Build
