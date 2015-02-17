@@ -1,7 +1,7 @@
 NAME = airdock/redis
 VERSION = 1.0
 
-.PHONY: all clean build tag_latest release debug run
+.PHONY: all clean build tag_latest release debug run run_client
 
 all: build 
 
@@ -29,5 +29,8 @@ debug:
 	docker run -t -i $(NAME):$(VERSION)
 
 run:
-	@echo "IPAddress =" $$(docker inspect --format '{{.NetworkSettings.IPAddress}}' $$(docker run -d -p 6379:6379 $(NAME):$(VERSION)))
+	@echo "IPAddress =" $$(docker inspect --format '{{.NetworkSettings.IPAddress}}' $$(docker run -d -p 6379:6379 --name redis $(NAME):$(VERSION)))
+	
+run_client:
+	docker run -it --rm --link redis:redis $(NAME):$(VERSION) bash -c 'redis-cli -h redis'
 	
