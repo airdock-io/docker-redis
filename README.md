@@ -25,9 +25,20 @@ Purpose of this image is:
 2. Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
 `docker search airdock` or go directly in 3.
 3. Execute redis server with default configuration:
-	'docker run -d -p 6379:6379  airdock/redis '
+	'docker run -d -p 6379:6379  --name redis airdock/redis '
 
 
+### Run redis-server with persistent data directory. (creates dump.rdb)
+
+	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis
+
+### Run redis-server with persistent data directory and password.
+
+	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis redis-server /etc/redis/redis.conf --requirepass <password>
+
+### Run redis-cli
+
+	docker run -it --rm --link redis:redis airdock/redis bash -c 'redis-cli -h redis'
 
 # Change Log
 
