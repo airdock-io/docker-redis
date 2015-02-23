@@ -1,66 +1,25 @@
 # REDIS
 
-Docker Image for [Redis](http://redis.io) based on airdock/base:latest
+A small Redis client based on airdock/redis which attemps to connect on a host named 'redis'
 
+> Name: airdock/redis-client
 
-Purpose of this image is:
-
-- install Redis server
-- based on airdock/base:latest (debian)
-
-> Name: airdock/redis
-
-***Dependency***: airdock/base:latest
-
-***Few links***:
-
-- [Puckel Redis](https://github.com/puckel/dockerfiles)
-- [Docker Redis](https://github.com/dockerfile/redis)
-- [William Yeh Redis](https://github.com/William-Yeh/docker-redis/blob/master/Dockerfile)
-
+***Dependency***: airdock/redis:latest
+ 
 
 # Usage
 
-1. You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
-2. Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
-`docker search airdock` or go directly in 3.
-3. Execute redis server with default configuration:
-	'docker run -d -p 6379:6379  --name redis airdock/redis '
+You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
 
-
-### Run redis-server with persistent data directory. (creates dump.rdb)
-
-	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis
-
-### Run redis-server with persistent data directory and password.
-
-	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis redis-server /etc/redis/redis.conf --requirepass <password>
-
-### Run redis-cli
-
-	docker run -it --rm --link redis:redis airdock/redis bash -c 'redis-cli -h redis'
-
-Or, use (be sure to name redis server as 'redis' on client side):
+Be sure to name redis server as 'redis' on client side):
 
 	docker run --link redis:redis -ti airdock/redis-client
 
 
-
 # Change Log
-
-## Todo
-
-- more test and usage (single, master/slave, ...)
-
+ 
 ## latest (current)
 
-- add redis server
-- launch redis-server with redis:redis account
-- log to docker collector
-- expose port 6379
-- listen all adresses
-- data directory "/var/lib/redis" (from package) 
-- add volume on log folder (/var/log/redis) and data folder (/var/lib/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
 
 # Build
@@ -70,7 +29,7 @@ Install "make" utility, and execute: `make build`
 
 In Makefile, you could retrieve this *variables*:
 
-- NAME: declare a full image name (aka airdock/redis)
+- NAME: declare a full image name (aka airdock/redis-client)
 - VERSION: declare image version
 
 And *tasks*:
