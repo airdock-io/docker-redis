@@ -40,6 +40,12 @@ Purpose of this image is:
 
 	docker run -it --rm --link redis:redis airdock/redis bash -c 'redis-cli -h redis'
 
+Or, use (be sure to name redis server as 'redis' on client side):
+
+	docker run --link redis:redis -ti airdock/redis-client
+
+
+
 # Change Log
 
 ## Todo
@@ -55,7 +61,7 @@ Purpose of this image is:
 - listen all adresses
 - data directory "/var/lib/redis" (from package) 
 - add volume on log folder (/var/log/redis) and data folder (/var/lib/redis)
-
+- define a quick and dirty redis client image (airdock/redis-client)
 
 # Build
 
