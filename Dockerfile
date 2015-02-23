@@ -9,8 +9,6 @@ FROM airdock/base:latest
 
 MAINTAINER Jerome Guibert <jguibert@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-
 # Install redis server
 # Run in foreground, listen on all addresses
 RUN echo "deb http://http.debian.net/debian wheezy-backports main contrib non-free" > /etc/apt/sources.list.d/backports.list && \
