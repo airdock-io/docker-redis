@@ -21,20 +21,44 @@ Purpose of this image is:
 
 # Usage
 
-1. You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
-2. Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
+You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
+Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
 `docker search airdock` or go directly in 3.
-3. Execute redis server with default configuration:
+
+Execute redis server with default configuration:
 	'docker run -d -p 6379:6379  --name redis airdock/redis '
 
 
-### Run redis-server with persistent data directory. (creates dump.rdb)
+### Run redis-server with persistent data directory.
 
 	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis
 
-### Run redis-server with persistent data directory and password.
+Or with a password:
+
 
 	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis redis-server /etc/redis/redis.conf --requirepass <password>
+
+
+	Take care about your permission on host folder named '/var/lib/redis'.
+
+	The user redis (uid 101) in your container should be known into your host.
+	See [How Managing user in docker container](https://github.com/airdock-io/docker-base/blob/master/README.md#how-managing-user-in-docker-container) and  [Common User List](https://github.com/airdock-io/docker-base/blob/master/CommonUserList.md).
+
+	So you should create an user with this uid:gid:
+
+	```
+	  sudo groupadd redis -g 101
+	  sudo useradd -u 101  --no-create-home --system --no-user-group redis
+	  sudo usermod -g redis redis
+	```
+
+	And then set owner and permissions on your host directory:
+
+	```
+		chown -R redis:redis /var/lib/redis
+	```
+
+
 
 ### Run redis-cli
 
@@ -58,10 +82,11 @@ Or, use (be sure to name redis server as 'redis' on client side):
 - launch redis-server with redis:redis account
 - log to docker collector
 - expose port 6379
-- listen all adresses
-- data directory "/var/lib/redis" (from package) 
+- listen all addresses
+- data directory "/var/lib/redis" (from package)
 - add volume on log folder (/var/log/redis) and data folder (/var/lib/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
+
 
 # Build
 
@@ -78,8 +103,8 @@ And *tasks*:
 - ***all***: alias to 'build'
 - ***clean***: remove all container which depends on this image, and remove image previously builded
 - ***build***: clean and build the current version
-- ***tag_latest***: build and tag current version with ":latest"
-- ***release***: execute tag_latest, push image onto registry, and tag git repository
+- ***tag_latest***: tag current version with ":latest"
+- ***release***: build and execute tag_latest, push image onto registry, and tag git repository
 - ***debug***: launch default command with builded image in interactive mode
 - ***run***: run image as daemon and print IP address.
 
