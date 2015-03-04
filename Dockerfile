@@ -24,7 +24,7 @@ RUN apt-get update && \
     chown -R redis:redis /etc/redis /var/log/redis /var/lib/redis && \
     cd /root && \
     apt-get remove -y gcc make g++ build-essential libc6-dev tcl && \
-    apt-get autoremove -y
+    apt-get autoremove -y  && \
     /root/post-install
 
 # Data Folder
