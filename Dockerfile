@@ -9,14 +9,21 @@ FROM airdock/base:latest
 
 MAINTAINER Jerome Guibert <jguibert@gmail.com>
 
-# Install redis server
-# Run in foreground, listen on all addresses
-RUN echo "deb http://http.debian.net/debian wheezy-backports main contrib non-free" > /etc/apt/sources.list.d/backports.list && \
-    apt-get update -qq && \
-    apt-get install --no-install-recommends -y -t wheezy-backports redis-server && \
-    sed -i 's/^\(daemonize\s*\)yes\s*$/\1no/g' /etc/redis/redis.conf && \
-    sed -ri 's/^bind .*$/bind 0.0.0.0/g' /etc/redis/redis.conf && \
-    sed -i 's/^\(logfile .*\)$/# \1/' /etc/redis/redis.conf && \
+# Install redis server from redis.io
+RUN apt-get update && \
+    apt-get install -y gcc make g++ build-essential libc6-dev tcl && \
+    cd /tmp && \
+    mkdir -p /etc/redis /var/log/redis /var/lib/redis  && \
+    curl http://download.redis.io/releases/redis-2.8.19.tar.gz > redis-2.8.19.tar.gz && \
+    tar -xvf redis-2.8.19.tar.gz && \
+    cd redis-2.8.19 && \
+    make && \
+    make PREFIX=/usr/bin install && \
+    cp redis.conf /etc/redis && \
+    sed -i 's/^dir .*$/dir \/var\/lib\/redis/g' /etc/redis/redis.conf && \
+    chown -R redis:redis /etc/redis /var/log/redis /var/lib/redis && \
+    cd /root && \
+    apt-get remove -y gcc make g++ build-essential libc6-dev tcl && \
     /root/post-install
 
 # Data Folder
@@ -26,4 +33,4 @@ VOLUME ["/var/lib/redis"]
 EXPOSE 6379
 
 # Define default command.
-CMD ["gosu", "redis:redis", "/usr/bin/redis-server", "/etc/redis/redis.conf"]
+#CMD ["gosu", "redis:redis", "/usr/bin/redis-server", "/etc/redis/redis.conf"]

@@ -5,7 +5,7 @@ Docker Image for [Redis](http://redis.io) based on airdock/base:latest
 
 Purpose of this image is:
 
-- install Redis server
+- install Redis server 2.8.19 (stable)
 - based on airdock/base:latest (debian)
 
 > Name: airdock/redis
@@ -77,7 +77,7 @@ Or, use (be sure to name redis server as 'redis' on client side):
 
 ## latest (current)
 
-- add redis server
+- add redis server from source
 - launch redis-server with redis:redis account
 - log to docker collector
 - expose port 6379
