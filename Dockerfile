@@ -33,4 +33,4 @@ VOLUME ["/var/lib/redis"]
 EXPOSE 6379
 
 # Define default command.
-#CMD ["gosu", "redis:redis", "/usr/bin/redis-server", "/etc/redis/redis.conf"]
+CMD ["gosu", "redis:redis", "/usr/bin/redis-server", "/etc/redis/redis.conf"]
