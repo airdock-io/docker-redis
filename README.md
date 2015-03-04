@@ -23,7 +23,7 @@ Purpose of this image is:
 
 You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
 Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
-`docker search airdock` or go directly in 3.
+`docker search airdock`.
 
 Execute redis server with default configuration:
 	'docker run -d -p 6379:6379  --name redis airdock/redis '
@@ -39,25 +39,24 @@ Or with a password:
 	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis redis-server /etc/redis/redis.conf --requirepass <password>
 
 
-	Take care about your permission on host folder named '/var/lib/redis'.
+Take care about your permission on host folder named '/var/lib/redis'.
 
-	The user redis (uid 101) in your container should be known into your host.
-	See [How Managing user in docker container](https://github.com/airdock-io/docker-base/blob/master/README.md#how-managing-user-in-docker-container) and  [Common User List](https://github.com/airdock-io/docker-base/blob/master/CommonUserList.md).
+The user redis (uid 4201) in your container should be known into your host.
+See [How Managing user in docker container](https://github.com/airdock-io/docker-base/blob/master/README.md#how-managing-user-in-docker-container) and  [Common User List](https://github.com/airdock-io/docker-base/blob/master/CommonUserList.md).
 
-	So you should create an user with this uid:gid:
+So you should create an user with this uid:gid:
 
-	```
-	  sudo groupadd redis -g 101
-	  sudo useradd -u 101  --no-create-home --system --no-user-group redis
-	  sudo usermod -g redis redis
-	```
+```
+  sudo groupadd redis -g 4201
+  sudo useradd -u 4201  --no-create-home --system --no-user-group redis
+  sudo usermod -g redis redis
+```
 
-	And then set owner and permissions on your host directory:
+And then set owner and permissions on your host directory:
 
-	```
-		chown -R redis:redis /var/lib/redis
-	```
-
+```
+	chown -R redis:redis /var/lib/redis
+```
 
 
 ### Run redis-cli
@@ -84,7 +83,7 @@ Or, use (be sure to name redis server as 'redis' on client side):
 - expose port 6379
 - listen all addresses
 - data directory "/var/lib/redis" (from package)
-- add volume on log folder (/var/log/redis) and data folder (/var/lib/redis)
+- add volume on and data folder (/var/lib/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
 
 
