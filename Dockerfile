@@ -28,7 +28,7 @@ RUN apt-get update && \
     /root/post-install
 
 # Data Folder
-VOLUME ["/var/lib/redis"]
+VOLUME ["/var/lib/redis", "/var/log/redis"]
 
 # Expose ports.
 EXPOSE 6379

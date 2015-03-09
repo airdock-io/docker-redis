@@ -83,7 +83,7 @@ Or, use (be sure to name redis server as 'redis' on client side):
 - expose port 6379
 - listen all addresses
 - data directory "/var/lib/redis" (from package)
-- add volume on and data folder (/var/lib/redis)
+- add volume on and data folder (/var/lib/redis) and log folder (/var/log/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
 
 
