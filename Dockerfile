@@ -18,7 +18,7 @@ RUN apt-get update && \
     tar -xvf redis-2.8.19.tar.gz && \
     cd redis-2.8.19 && \
     make && \
-    make PREFIX=/usr/bin install && \
+    make install && \
     cp redis.conf /etc/redis && \
     sed -i 's/^dir .*$/dir \/var\/lib\/redis/g' /etc/redis/redis.conf && \
     chown -R redis:redis /etc/redis /var/log/redis /var/lib/redis && \
@@ -34,4 +34,4 @@ VOLUME ["/var/lib/redis", "/var/log/redis"]
 EXPOSE 6379
 
 # Define default command.
-CMD ["gosu", "redis:redis", "/usr/bin/redis-server", "/etc/redis/redis.conf"]
+CMD ["gosu", "redis:redis", "/usr/local/bin/redis-server", "/etc/redis/redis.conf"]
