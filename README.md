@@ -21,9 +21,7 @@ Purpose of this image is:
 
 # Usage
 
-You should have already install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh/) for more complex usage.
-Download [automated build](https://registry.hub.docker.com/u/airdock/) from public [Docker Hub Registry](https://registry.hub.docker.com/):
-`docker search airdock`.
+You should have already install [Docker](https://www.docker.com/).
 
 Execute redis server with default configuration:
 	'docker run -d -p 6379:6379  --name redis airdock/redis '
@@ -42,7 +40,9 @@ Or with a password:
 Take care about your permission on host folder named '/var/lib/redis'.
 
 The user redis (uid 4201) in your container should be known into your host.
-See [How Managing user in docker container](https://github.com/airdock-io/docker-base/blob/master/README.md#how-managing-user-in-docker-container) and  [Common User List](https://github.com/airdock-io/docker-base/blob/master/CommonUserList.md).
+See :
+* [How Managing user in docker container ?](https://github.com/airdock-io/docker-base/wiki/How-Managing-user-in-docker-container)
+* [Common User List](https://github.com/airdock-io/docker-base/wiki/Common-User-List)
 
 So you should create an user with this uid:gid:
 
@@ -57,7 +57,7 @@ And then set owner and permissions on your host directory:
 ```
 	chown -R redis:redis /var/lib/redis
 ```
-
+Don't forget to add your current user to this new group.
 
 ### Run redis-cli
 
@@ -85,51 +85,38 @@ Or, use (be sure to name redis server as 'redis' on client side):
 - data directory "/var/lib/redis" (from package)
 - add volume on and data folder (/var/lib/redis) and log folder (/var/log/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
-
+- MIT license
 
 # Build
 
-Alternatively, you can build an image from [Dockerfile](https://github.com/airdock-io/docker-redis).
-Install "make" utility, and execute: `make build`
+- Install "make" utility, and execute: `make build`
+- Or execute: 'docker build -t airdock/redis:latest --rm .'
 
-In Makefile, you could retrieve this *variables*:
-
-- NAME: declare a full image name (aka airdock/redis)
-- VERSION: declare image version
-
-And *tasks*:
-
-- ***all***: alias to 'build'
-- ***clean***: remove all container which depends on this image, and remove image previously builded
-- ***build***: clean and build the current version
-- ***tag_latest***: tag current version with ":latest"
-- ***release***: build and execute tag_latest, push image onto registry, and tag git repository
-- ***debug***: launch default command with builded image in interactive mode
-- ***run***: run image as daemon and print IP address.
+See [Docker Project Tree](https://github.com/airdock-io/docker-base/wiki/Docker-Project-Tree) for more details.
 
 
-
-# License
+# MIT License
 
 ```
- Copyright (c) 1998, 1999, 2000 Thai Open Source Software Center Ltd
+The MIT License (MIT)
 
- Permission is hereby granted, free of charge, to any person obtaining
- a copy of this software and associated documentation files (the
- "Software"), to deal in the Software without restriction, including
- without limitation the rights to use, copy, modify, merge, publish,
- distribute, sublicense, and/or sell copies of the Software, and to
- permit persons to whom the Software is furnished to do so, subject to
- the following conditions:
+Copyright (c) 2015 Airdock.io
 
- The above copyright notice and this permission notice shall be included
- in all copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
- CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 ```
