@@ -1,4 +1,4 @@
-# REDIS
+# REDIS [![](https://badge.imagelayers.io/airdock/redis:latest.svg)](https://imagelayers.io/?images=airdock/redis:latest 'Get your own badge on imagelayers.io')
 
 Docker Image for [Redis](http://redis.io) based on airdock/base:latest
 
