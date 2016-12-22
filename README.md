@@ -31,7 +31,16 @@ You should have already install [Docker](https://www.docker.com/).
 ## Launch Redis server
 
 Execute redis server with default configuration:
-	'docker run -d -p 6379:6379  --name redis airdock/redis '
+
+```
+  # latest
+	docker run -d -p 6379:6379  --name redis airdock/redis:latest
+	# or 3.2
+	docker run -d -p 6379:6379  --name redis airdock/redis:3.2
+	# Neural Redis
+	docker run -d -p 6379:6379  --name redis-neural airdock/redis:neuralredis
+
+```
 
 
 ### Run redis-server with persistent data directory.
