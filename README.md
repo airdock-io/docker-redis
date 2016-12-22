@@ -1,16 +1,16 @@
-# REDIS [![](https://badge.imagelayers.io/airdock/redis:latest.svg)](https://imagelayers.io/?images=airdock/redis:latest 'Get your own badge on imagelayers.io')
+# REDIS [![](https://images.microbadger.com/badges/image/airdock/redis:latest.svg)](https://microbadger.com/images/airdock/redis:latest "Get your own image badge on microbadger.com")
 
-Docker Image for [Redis](http://redis.io) based on airdock/base:latest
+Docker Image for [Redis](http://redis.io) based on airdock/base:jessie
 
 
 Purpose of this image is:
 
-- install Redis server 2.8.19 (stable)
-- based on airdock/base:latest (debian)
+- install Redis server
+- run server on redis user account
+- integrate tini process managment
+- based on airdock/base:jessie
 
 > Name: airdock/redis
-
-***Dependency***: airdock/base:latest
 
 ***Few links***:
 
@@ -18,24 +18,31 @@ Purpose of this image is:
 - [Docker Redis](https://github.com/dockerfile/redis)
 - [William Yeh Redis](https://github.com/William-Yeh/docker-redis/blob/master/Dockerfile)
 
+# Tags
+
+- latest, 3.2 -> 3.2.6 [![](https://images.microbadger.com/badges/image/airdock/redis:latest.svg)](https://microbadger.com/images/airdock/redis:latest "Get your own image badge on microbadger.com")
+- 2.8 -> 2.8.19 [![](https://images.microbadger.com/badges/image/airdock/rabbitmq:2.8.svg)](https://microbadger.com/images/airdock/rabbitmq:2.8 "Get your own image badge on microbadger.com")
+- neuralredis -> neural networks data structure extension for Redis machine learning (https://github.com/antirez/neural-redis)
 
 # Usage
 
 You should have already install [Docker](https://www.docker.com/).
+
+## Launch Redis server
 
 Execute redis server with default configuration:
 	'docker run -d -p 6379:6379  --name redis airdock/redis '
 
 
 ### Run redis-server with persistent data directory.
-
+```
 	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis
-
+```
 Or with a password:
 
-
+```
 	docker run -d -p 6379:6379 -v <data-dir>:/var/lib/redis --name redis airdock/redis redis-server /etc/redis/redis.conf --requirepass <password>
-
+```
 
 Take care about your permission on host folder named '/var/lib/redis'.
 
@@ -61,13 +68,26 @@ Don't forget to add your current user to this new group.
 
 ### Run redis-cli
 
+```
 	docker run -it --rm --link redis:redis airdock/redis bash -c 'redis-cli -h redis'
+```
 
 Or, use (be sure to name redis server as 'redis' on client side):
-
+```
 	docker run --link redis:redis -ti airdock/redis-client
+```
 
+## configure
 
+Configuration file is located under /etc/redis.
+
+On docker host, you should set:
+```
+	echo never > /sys/kernel/mm/transparent_hugepage/enabled
+	echo "net.core.somaxconn=1024" >> /etc/sysctl.conf
+	echo "vm.overcommit_memory=1" >> /etc/sysctl.conf
+```
+See [Redis Administration](https://redis.io/topics/admin)
 
 # Change Log
 
@@ -75,10 +95,11 @@ Or, use (be sure to name redis server as 'redis' on client side):
 
 - more test and usage (single, master/slave, ...)
 
-## latest (current)
+## latest and 3.2 (current)
 
-- add redis server from source
+- add redis server 3.2.6 from source
 - launch redis-server with redis:redis account
+- integrate tini
 - log to docker collector
 - expose port 6379
 - listen all addresses
@@ -86,6 +107,37 @@ Or, use (be sure to name redis server as 'redis' on client side):
 - add volume on and data folder (/var/lib/redis) and log folder (/var/log/redis)
 - define a quick and dirty redis client image (airdock/redis-client)
 - MIT license
+
+
+## 2.8
+
+- add redis server 2.8.19 from source
+- launch redis-server with redis:redis account
+- integrate tini
+- log to docker collector
+- expose port 6379
+- listen all addresses
+- data directory "/var/lib/redis" (from package)
+- add volume on and data folder (/var/lib/redis) and log folder (/var/log/redis)
+- define a quick and dirty redis client image (airdock/redis-client)
+- MIT license
+
+
+# neuralredis
+
+- add redis server (Actually based on unstable redis server version)
+- add https://github.com/antirez/neural-redis from source
+- launch redis-server with redis:redis account
+- integrate tini
+- log to docker collector
+- expose port 6379
+- listen all addresses
+- data directory "/var/lib/redis" (from package)
+- add volume on and data folder (/var/lib/redis) and log folder (/var/log/redis)
+- define a quick and dirty redis client image (airdock/redis-client)
+- MIT license
+
+
 
 # Build
 

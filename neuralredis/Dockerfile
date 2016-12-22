@@ -11,20 +11,20 @@ MAINTAINER Jerome Guibert <jguibert@gmail.com>
 
 ENV REDIS_VERSION 3.2.6
 # Install redis server from redis.io
-RUN apt-get update && \
-    apt-get install -y gcc make g++ build-essential libc6-dev tcl && \
-    cd /tmp && \
-    mkdir -p /etc/redis /var/log/redis /var/lib/redis  && \
-    curl http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz > redis-${REDIS_VERSION}.tar.gz && \
-    tar -xvf redis-${REDIS_VERSION}.tar.gz && \
-    cd redis-${REDIS_VERSION} && \
+RUN apt-get update && apt-get install -y gcc make g++ build-essential libc6-dev tcl git && \
+    cd /tmp && mkdir -p /etc/redis /var/log/redis /var/lib/redis && \
+    git clone https://github.com/antirez/redis.git && cd redis && \
     make && \
     make install && \
     cp redis.conf /etc/redis && \
     sed -i 's/^dir .*$/dir \/var\/lib\/redis/g' /etc/redis/redis.conf && \
     chown -R redis:redis /etc/redis /var/log/redis /var/lib/redis && \
+    cd /tmp && \
+    git clone https://github.com/antirez/neural-redis.git && cd neural-redis && \
+    make generic && mkdir -p /usr/lib/neuralredis && cp neuralredis.so /usr/lib/neuralredis && \
+    echo "loadmodule /usr/lib/neuralredis/neuralredis.so" >> /etc/redis/redis.conf && \
     cd /root && \
-    apt-get remove -y gcc make g++ build-essential libc6-dev tcl && \
+    apt-get remove -y gcc make g++ build-essential libc6-dev tcl git && \
     apt-get autoremove -y  && \
     /root/post-install
 
